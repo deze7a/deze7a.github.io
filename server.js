@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const app = express();
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static('.'));
 
 app.post('/convert', (req, res) => {
     const { url, format } = req.body;
@@ -14,7 +14,7 @@ app.post('/convert', (req, res) => {
         return res.status(400).send('Invalid parameters.');
     }
 
-    const outputFileName = `video.${format}`;
+    const outputFileName = `downloads/video.${format}`;
     const command = `yt-dlp -x --audio-format ${format} -o ${outputFileName} "${url}"`;
 
     exec(command, (error) => {
@@ -23,14 +23,11 @@ app.post('/convert', (req, res) => {
             return res.status(500).send('Error processing video.');
         }
 
-        const filePath = path.join(__dirname, outputFileName);
-        res.json({ downloadUrl: `/downloads/${outputFileName}` });
+        res.json({ downloadUrl: `/${outputFileName}` });
 
-        setTimeout(() => fs.unlinkSync(filePath), 60000); // Delete file after 1 minute
+        setTimeout(() => fs.unlinkSync(outputFileName), 60000); // Delete file after 1 minute
     });
 });
-
-app.use('/downloads', express.static(path.join(__dirname)));
 
 const PORT = 3000;
 app.listen(PORT, () => {
