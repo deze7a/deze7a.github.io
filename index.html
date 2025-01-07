@@ -41,8 +41,8 @@
             resultDiv.innerHTML = '';
 
             try {
-                // Call the Yarapis API directly without authentication
-                const response = await fetch('https://api.yarapis.com/v1/convert', {
+                // Use a backend proxy to call Yarapis API
+                const response = await fetch('/api/convert', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
