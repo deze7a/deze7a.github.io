@@ -1,25 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YT to MP3/WAV Converter</title>
-    <link rel="stylesheet" href="style.css">
+    <title>YouTube to MP3/WAV Converter</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="assets/logo.png" alt="Logo" />
+            <img src="assets/logo.png" alt="Logo">
             <h1>YT Converter</h1>
         </div>
     </header>
     <main>
         <div class="container">
-            <h2>Convert your favorite YouTube videos to MP3 or WAV</h2>
+            <h2>Convert YouTube Videos to MP3/WAV</h2>
             <form id="convertForm">
-                <input type="text" id="url" name="url" placeholder="Paste YouTube video URL" required />
-                <select id="format" name="format" required>
+                <input type="text" id="url" placeholder="Enter YouTube Video URL" required>
+                <select id="format" required>
                     <option value="mp3">MP3</option>
                     <option value="wav">WAV</option>
                 </select>
@@ -31,6 +30,27 @@
     <footer>
         <p>&copy; 2025 YT Converter. All rights reserved.</p>
     </footer>
-    <script src="script.js"></script>
+
+    <script>
+        document.getElementById('convertForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = document.getElementById('url').value;
+            const format = document.getElementById('format').value;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            // Use an external API or service for the conversion
+            // Here, replace with a valid service that handles YouTube video conversion
+            const serviceUrl = `https://api.external-converter.example?url=${encodeURIComponent(url)}&format=${format}`;
+
+            const link = document.createElement('a');
+            link.href = serviceUrl;
+            link.target = '_blank';
+            link.textContent = 'Click here to download your file';
+            resultDiv.appendChild(link);
+        });
+    </script>
 </body>
 </html>
+
